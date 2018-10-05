@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.github.mjeanroy.mybatisissue.TeamEntity">
+  <resultMap id="teamMap" type="com.github.mjeanroy.mybatisissue.TeamEntity">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <collection property="members" resultMap="memberMap"/>
+  </resultMap>
+
+  <resultMap id="memberMap" type="com.github.mjeanroy.mybatisissue.MemberEntity">
+    <id property="id" column="member_id"/>
+    <result property="name" column="member_name"/>
+  </resultMap>
+
+  <select id="findAll" resultMap="teamMap">
+    select team.id as id, team.name as name, member.id as member_id, member.name as member_name
+    from team
+    left outer join member on member.team_id = team.id
+    order by id;
+  </select>
+</mapper>
