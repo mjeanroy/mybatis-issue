@@ -20,8 +20,19 @@ class TeamDaoRepositoryTest {
         List<TeamDto> teams = teamDaoRepository.findAll();
 
         Assertions.assertNotNull(teams);
-        Assertions.assertEquals(teams.size(), 1);
+        Assertions.assertEquals(teams.size(), 2);
         Assertions.assertEquals(teams.get(0).getMembers().size(), 10);
+        Assertions.assertEquals(teams.get(1).getMembers().size(), 5);
+    }
+
+    @Test
+    void it_should_get_all_teams_using_for_loop() {
+        List<TeamDto> teams = teamDaoRepository.findAllUsingForLoop();
+
+        Assertions.assertNotNull(teams);
+        Assertions.assertEquals(teams.size(), 2);
+        Assertions.assertEquals(teams.get(0).getMembers().size(), 10);
+        Assertions.assertEquals(teams.get(1).getMembers().size(), 5);
     }
 
     @Test
@@ -90,7 +101,7 @@ class TeamDaoRepositoryTest {
         insertTeamStmt.executeUpdate(insertTeamSql);
 
         for (int i = 21; i <= 25; ++i) {
-            String insertMemberSql = "INSERT INTO member(id, name, team_id) VALUES(" + i + ", 'John Doe #" + i + "', 2)";
+            String insertMemberSql = "INSERT INTO member(id, name, team_id) VALUES(" + i + ", 'Jane Doe #" + i + "', 2)";
             Statement insertMemberStatement = connection.createStatement();
             insertMemberStatement.executeUpdate(insertMemberSql);
         }
