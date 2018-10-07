@@ -15,7 +15,7 @@
     <result property="name" column="member_name"/>
   </resultMap>
 
-  <select id="findAll" resultMap="teamMap">
+  <select resultOrdered="true" id="findAll" resultMap="teamMap">
     select team.id as id, team.name as name, member.id as member_id, member.name as member_name
     from team
     left outer join member on member.team_id = team.id
