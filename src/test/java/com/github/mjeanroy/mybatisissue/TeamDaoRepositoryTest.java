@@ -17,7 +17,7 @@ class TeamDaoRepositoryTest {
 
     @Test
     void it_should_get_all_teams() {
-        List<TeamEntity> teams = teamDaoRepository.findAll();
+        List<TeamDto> teams = teamDaoRepository.findAll();
 
         Assertions.assertNotNull(teams);
         Assertions.assertEquals(teams.size(), 1);
@@ -29,8 +29,9 @@ class TeamDaoRepositoryTest {
         List<TeamEntity> teams = teamDaoRepository.findAllEntities();
 
         Assertions.assertNotNull(teams);
-        Assertions.assertEquals(teams.size(), 1);
+        Assertions.assertEquals(teams.size(), 2);
         Assertions.assertEquals(teams.get(0).getMembers().size(), 10);
+        Assertions.assertEquals(teams.get(1).getMembers().size(), 5);
     }
 
     private static void initData() throws Exception {
@@ -39,6 +40,7 @@ class TeamDaoRepositoryTest {
         createTableTeam(connection);
         createTableMember(connection);
         createFirstTeam(connection);
+        createSecondTeam(connection);
     }
 
     private static void createTableTeam(Connection connection) throws Exception {
@@ -77,6 +79,18 @@ class TeamDaoRepositoryTest {
 
         for (int i = 1; i <= 10; ++i) {
             String insertMemberSql = "INSERT INTO member(id, name, team_id) VALUES(" + i + ", 'John Doe #" + i + "', 1)";
+            Statement insertMemberStatement = connection.createStatement();
+            insertMemberStatement.executeUpdate(insertMemberSql);
+        }
+    }
+
+    private static void createSecondTeam(Connection connection) throws Exception {
+        String insertTeamSql = "INSERT INTO team(id, name) VALUES(2, 'The Suicide Squad')";
+        Statement insertTeamStmt = connection.createStatement();
+        insertTeamStmt.executeUpdate(insertTeamSql);
+
+        for (int i = 21; i <= 25; ++i) {
+            String insertMemberSql = "INSERT INTO member(id, name, team_id) VALUES(" + i + ", 'John Doe #" + i + "', 2)";
             Statement insertMemberStatement = connection.createStatement();
             insertMemberStatement.executeUpdate(insertMemberSql);
         }

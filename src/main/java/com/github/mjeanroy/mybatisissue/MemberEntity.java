@@ -24,4 +24,12 @@ public class MemberEntity {
     public MemberDto toMember() {
         return new MemberDto(id, name);
     }
+
+    @Override
+    public String toString() {
+        return "MemberEntity {" +
+                    "id=" + id + ", " +
+                    "name=" + name +
+                "}";
+    }
 }

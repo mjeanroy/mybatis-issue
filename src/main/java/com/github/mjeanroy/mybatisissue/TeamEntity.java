@@ -34,4 +34,13 @@ public class TeamEntity {
     public TeamDto toTeam() {
         return new TeamDto(id, name, members);
     }
+
+    @Override
+    public String toString() {
+        return "TeamEntity {" +
+                    "id=" + id + ", " +
+                    "name=" + name + ", " +
+                    "members=" + members +
+                "}";
+    }
 }

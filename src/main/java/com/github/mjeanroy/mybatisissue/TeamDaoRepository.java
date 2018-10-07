@@ -18,17 +18,18 @@ class TeamDaoRepository {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }
 
-    List<TeamEntity> findAll() {
+    List<TeamDto> findAll() {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             return findAsStream(session)
-                    .filter(team -> team.getMembers().size() > 1)
+                    .map(team -> team.toTeam())
                     .collect(Collectors.toList());
         }
     }
 
     List<TeamEntity> findAllEntities() {
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            return findAsStream(session).collect(Collectors.toList());
+            return findAsStream(session)
+                    .collect(Collectors.toList());
         }
     }
 
